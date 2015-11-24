@@ -196,12 +196,13 @@ function Model(options = {}) {
   const model = Object.create(Model.prototype, props);
 
   _.extend(model, options.api);
-  const bindAllArgs = [this];
-  bindAllArgs.push.apply(bindAllArgs, _.methods(options.api));
 
-  if (bindAllArgs.length > 1) {
-    _.bindAll.apply(_, bindAllArgs);
+  // bind context of all api methods
+  const methods = _.methods(options.api);
+  if (methods.length) {
+    _.bindAll(model, _.methods(options.api));
   }
+
   privateApi.constructRequests.call(model);
 
   return model;
@@ -445,10 +446,11 @@ Model.prototype = {
     this.queue.save = [];
     this.queue.destroy = [];
 
-    // removes all properties
+    // remove all models
     replaceObjectProperties(this.byId);
     replaceObjectProperties(this.data);
 
+    // get all models
     return this.fetch();
   },
 
@@ -669,7 +671,14 @@ const privateApi = {
   },
 
   addModelToLocalData(model) {
+    const id = model[this.idAttribute];
+
     this.data.push(model);
+
+    if (model[this.idAttribute]) {
+      this.byId[id] = model;
+    }
+
     return model;
   },
 
