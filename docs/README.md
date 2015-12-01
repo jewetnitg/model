@@ -1,7 +1,7 @@
 Model
 ============================
 
-This npm module serves to make working with models easier.
+This npm module serves to make working with models easier, it uses the frontend-communicator module internally to handle its communications with the server, please refer to <a href="http://jewetnitg.github.io/communicator/">this page</a> for its documentation.
 
 Adding it to a browserify project
 =================================
@@ -11,6 +11,10 @@ npm install frontend-model --save
 ```
 
 Alternatively the build can be downloaded <a href="build.tar.gz">here</a>
+
+Walkthrough
+===========
+Please read the {@tutorial walkthrough} on how to get started.
 
 Installing
 ==========

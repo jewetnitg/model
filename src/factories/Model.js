@@ -79,7 +79,34 @@ function Model(options = {}) {
   return model;
 }
 
+/**
+ * All data for all models
+ *
+ * @name models
+ * @memberof Model
+ * @static
+ * @type Object
+ *
+ * @example
+ * import Model from 'frontend-model';
+ *
+ * Model.models.users; // [{name: 'bob'}, {...}, {...}]
+ */
 Model.models = models;
+
+/**
+ * All data for all models by id
+ *
+ * @name byId
+ * @memberof Model
+ * @static
+ * @type Object
+ *
+ * @example
+ * import Model from 'frontend-model';
+ *
+ * Model.models.byId; // {1: {name: 'bob'}, 2: {...}, 3: {...}}
+ */
 Model.byId = modelsById;
 
 /**
@@ -171,18 +198,66 @@ Model.Connection = communicator.Connection;
 
 Model.prototype = {
 
+  /**
+   * Listens to an event and triggers the callback when it occurs.
+   *
+   * @method on
+   * @memberof Model
+   * @instance
+   *
+   * @param event {String} The event to listen for
+   * @param callback {Function} The function to trigger when the event has occurred
+   *
+   * @returns {*}
+   */
   on(event, callback) {
     return this.listener.on(event, callback);
   },
 
+  /**
+   * Stops removes one or all listeners from an event
+   *
+   * @method off
+   * @memberof Model
+   * @instance
+   *
+   * @param event{String} The event that has to be stopped listening to
+   * @param {Function} [callback] - The callback that should be removed
+   *
+   * @returns {*}
+   */
   off(event, callback) {
     return this.listener.off(event, callback);
   },
 
+  /**
+   * Listens to an event and triggers the callback when it occurs. After this happens the listener is removed.
+   *
+   * @method once
+   * @memberof Model
+   * @instance
+   *
+   * @param event {String} The event to listen for
+   * @param callback {Function} The function to trigger when the event has occurred
+   *
+   * @returns {*}
+   */
   once(event, callback) {
     return this.listener.once(event, callback);
   },
 
+  /**
+   * Triggers an event with data
+   *
+   * @method trigger
+   * @memberof Model
+   * @instance
+   *
+   * @param event {String} Event to trigger
+   * @param data {*} Data to trigger with the event
+   *
+   * @returns {*}
+   */
   trigger(event, data) {
     return this.listener.trigger(event, data);
   },
