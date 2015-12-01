@@ -3,12 +3,14 @@ Model
 
 This npm module serves to make working with models easier.
 
-Adding it to a project
-======================
+Adding it to a browserify project
+=================================
 
 ```
 npm install frontend-model --save
 ```
+
+Alternatively the build can be downloaded <a href="build.tar.gz">here</a>
 
 Installing
 ==========

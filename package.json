@@ -11,9 +11,8 @@
   "author": "Rik Hoffbauer",
   "license": "ISC",
   "browserify": {
-    "entries": [
-      "./index.js"
-    ],
+    "standalone": "standalone",
+    "entries": "./standalone.js",
     "debug": true,
     "transform": [
       [
@@ -29,7 +28,7 @@
   "dependencies": {
     "jquery": "2.1.4",
     "lodash": "^3.10.1",
-    "frontend-communicator": "0.0.2",
+    "frontend-communicator": "^0.0.6",
     "require-globify": "^1.3.0"
   },
   "devDependencies": {

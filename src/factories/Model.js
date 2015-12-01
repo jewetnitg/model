@@ -2,8 +2,7 @@ import events from 'events';
 
 import _ from 'lodash';
 
-import communicator from 'frontend-communicator';
-import XHR from 'frontend-communicator/src/adapters/XHR';
+import communicator from '../singletons/communicator';
 
 import ModelValidator from '../validators/Model';
 import models from '../singletons/models';
@@ -11,9 +10,6 @@ import modelsById from '../singletons/modelsById';
 
 import makeRestRequestsForModel from '../helpers/makeRestRequestsForModel';
 import replaceObjectProperties from '../helpers/replaceObjectProperties';
-
-// register the XHR adapter by default
-communicator.Adapter(XHR);
 
 /**
  * This function creates an Model.
@@ -38,7 +34,7 @@ communicator.Adapter(XHR);
  * @todo handle connection events
  * @todo implement schema, deprecate defaults
  * @todo tbd: do we want to allow for transformer functions to be defined that are executed before and after a request to the server is made
- * @todo tbd: allow idAttribute, createdAtAttribute and updateAtAttribute to be implemented as functions
+ * @todo allow idAttribute, createdAtAttribute and updateAtAttribute to be implemented as functions
  *
  * @example
  * import Model from 'frontend-model';
@@ -154,6 +150,10 @@ function Model(options = {}) {
       value: models[options.name] = []
     },
 
+    _modelChangeListeners: {
+      value: []
+    },
+
     /**
      * Listens for an event and triggers the callback when it occurs.
      *
@@ -204,9 +204,14 @@ function Model(options = {}) {
   }
 
   privateApi.constructRequests.call(model);
+  privateApi.bindModelChangeListener.call(model);
+
+  Model.models[model.name] = model;
 
   return model;
 }
+
+Model.models = {};
 
 /**
  * The default values for a model, these may be changed.
@@ -297,6 +302,13 @@ Model.Connection = communicator.Connection;
 
 Model.prototype = {
 
+  listenTo(model, callback) {
+    this._modelChangeListeners.push({
+      model,
+      callback
+    });
+  },
+
   /**
    * Determines whether a model is new (doesn't exist on the server)
    *
@@ -383,7 +395,7 @@ Model.prototype = {
    */
   save(model) {
     if (typeof model !== 'object') {
-      return privateApi.call(this, 'save');
+      return privateApi.runQueue.call(this, 'save');
     }
 
     if (this.isNew(model)) {
@@ -443,8 +455,8 @@ Model.prototype = {
    */
   reset() {
     // clear queues
-    this.queue.save = [];
-    this.queue.destroy = [];
+    this.queues.save = [];
+    this.queues.destroy = [];
 
     // remove all models
     replaceObjectProperties(this.byId);
@@ -613,13 +625,44 @@ Model.prototype = {
 // private API of the Model
 const privateApi = {
 
+  bindModelChangeListener() {
+    this.on('change', (model) => {
+      privateApi.callModelChangeListeners.call(this, model);
+    });
+  },
+
+  callModelChangeListeners(model) {
+    _.each(this._modelChangeListeners, (listener) => {
+      if (listener.model) {
+        if (model) {
+          if (Array.isArray(model)) {
+            model = _.find(model, (item) => {
+              return item === listener.model
+                || (item[this.idAttribute] && item[this.idAttribute] === item[this.idAttribute])
+                || (item.id && item.id === listener.id);
+            });
+
+            if (model) {
+              listener.callback(model);
+            }
+          } else if (typeof model === 'object') {
+            if (model === listener.model || (model[this.idAttribute] && model[this.idAttribute] === model[this.idAttribute]) || (model.id && model.id === listener.id)) {
+              listener.callback(model);
+            }
+          }
+        }
+      } else {
+        listener.callback();
+      }
+    });
+  },
+
   constructRequests() {
     _.extend(this.requests, makeRestRequestsForModel(this, privateApi));
 
     _.each(this.requests, (requestOptions, name) => {
       const options = _.clone(requestOptions);
-      options.name = options.name || name;
-      options.context = options.context || this.name;
+      options.name = `${this.name}.${options.name || name}`;
       options.connection = options.connection || this.connection;
 
       communicator.Request(options);
@@ -636,41 +679,50 @@ const privateApi = {
     }
   },
 
-  removeModelsFromLocalData(models = [], addToQueue = false) {
+  removeModelsFromLocalData(models = [], addToQueue = false, dontTrigger = false) {
     const _models = _.flatten(models);
 
     _.each(_models, (model) => {
       const existingModel = privateApi.findModelInLocalData.call(this, model);
 
       if (existingModel) {
-        privateApi.removeModelFromLocalData.call(this, existingModel, model);
+        privateApi.removeModelFromLocalData.call(this, existingModel, model, true);
       }
 
       if (addToQueue) {
         privateApi.addToQueue.call(this, 'destroy', model);
       }
+
+      if (!dontTrigger) {
+        this.trigger('change', this.data);
+        this.trigger('remove');
+      }
     });
   },
 
-  addModelsToLocalData(models = [], addToQueue = false) {
+  addModelsToLocalData(models = [], addToQueue = false, dontTrigger = false) {
     const _models = _.flatten(models);
 
     _.each(_models, (model) => {
       const existingModel = privateApi.findModelInLocalData.call(this, model);
 
       if (existingModel) {
-        privateApi.updateModelInLocalData.call(this, existingModel, model);
+        privateApi.updateModelInLocalData.call(this, existingModel, model, true);
       } else {
-        privateApi.addModelToLocalData.call(this, model);
+        privateApi.addModelToLocalData.call(this, model, true);
       }
 
       if (addToQueue) {
         privateApi.addToQueue.call(this, 'save', model);
       }
+
+      if (!dontTrigger) {
+        this.trigger('change', this.data);
+      }
     });
   },
 
-  addModelToLocalData(model) {
+  addModelToLocalData(model, dontTrigger) {
     const id = model[this.idAttribute];
 
     this.data.push(model);
@@ -679,18 +731,28 @@ const privateApi = {
       this.byId[id] = model;
     }
 
+    if (!dontTrigger) {
+      this.trigger('change', model);
+      this.trigger('add', model);
+    }
+
     return model;
   },
 
-  updateModelInLocalData(existingModel, model) {
+  updateModelInLocalData(existingModel, model, dontTrigger) {
     if (existingModel !== model) {
       replaceObjectProperties(existingModel, model);
+    }
+
+    if (!dontTrigger) {
+      this.trigger('change', existingModel);
+      this.trigger('update', existingModel);
     }
 
     return existingModel;
   },
 
-  removeModelFromLocalData(model) {
+  removeModelFromLocalData(model, dontTrigger) {
     const index = this.data.indexOf(model);
     const id = this.id(model);
 
@@ -700,6 +762,11 @@ const privateApi = {
 
     if (typeof id !== 'undefined') {
       delete this.byId[id];
+    }
+
+    if (!dontTrigger) {
+      this.trigger('change', {id: id});
+      this.trigger('remove', {id: id});
     }
   },
 

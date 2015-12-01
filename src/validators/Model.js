@@ -2,7 +2,7 @@
  * @author rik
  */
 import models from '../singletons/models';
-import communicator from 'frontend-communicator';
+import communicator from '../singletons/communicator';
 
 const ModelValidator = {
 
