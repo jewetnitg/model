@@ -2,6 +2,8 @@ import events from 'events';
 
 import _ from 'lodash';
 
+import Queue from './Queue';
+
 import communicator from '../singletons/communicator';
 
 import ModelValidator from '../validators/Model';
@@ -96,12 +98,6 @@ function Model(options = {}) {
     },
     createdOnAttribute: {
       value: options.createdOnAttribute
-    },
-    queues: {
-      value: {
-        save: [],
-        destroy: []
-      }
     },
 
     /**
@@ -203,6 +199,7 @@ function Model(options = {}) {
     _.bindAll(model, _.methods(options.api));
   }
 
+  privateApi.constructQueues.call(model);
   privateApi.constructRequests.call(model);
   privateApi.bindModelChangeListener.call(model);
 
@@ -441,7 +438,7 @@ Model.prototype = {
    */
   save(model) {
     if (typeof model !== 'object') {
-      return privateApi.runQueue.call(this, 'save');
+      return this.queues.save.run();
     }
 
     if (this.isNew(model)) {
@@ -500,9 +497,8 @@ Model.prototype = {
    *   .then(...)
    */
   reset() {
-    // clear queues
-    this.queues.save = [];
-    this.queues.destroy = [];
+    this.queues.save.empty();
+    this.queues.destroy.empty();
 
     // remove all models
     replaceObjectProperties(this.byId);
@@ -539,7 +535,7 @@ Model.prototype = {
    */
   destroy(model) {
     if (typeof model === 'undefined') {
-      return privateApi.runQueue.call(this, 'destroy');
+      return this.queues.destroy.run();
     }
 
     const id = this.id(model);
@@ -672,6 +668,17 @@ Model.prototype = {
 // private API of the Model, these methods are always called with the context of a Model
 const privateApi = {
 
+  constructQueues() {
+    this.queues = {
+      save: Queue((model) => {
+        return this.save(model);
+      }),
+      destroy: Queue((model) => {
+        return this.destroy(model);
+      })
+    };
+  },
+
   bindModelChangeListener() {
     this.on('change', (model) => {
       privateApi.callModelChangeListeners.call(this, model);
@@ -736,11 +743,11 @@ const privateApi = {
       if (existingModel) {
         privateApi.removeModelFromLocalData.call(this, existingModel, model, dontTrigger);
       }
-
-      if (addToQueue) {
-        privateApi.addToQueue.call(this, 'destroy', model);
-      }
     });
+
+    if (addToQueue) {
+      this.queues.destroy.add(models);
+    }
   },
 
   addModelsToLocalData(models = [], addToQueue = false, dontTrigger = false) {
@@ -754,11 +761,11 @@ const privateApi = {
       } else {
         privateApi.addModelToLocalData.call(this, model, dontTrigger);
       }
-
-      if (addToQueue) {
-        privateApi.addToQueue.call(this, 'save', model);
-      }
     });
+
+    if (addToQueue) {
+      this.queues.save.add(models);
+    }
   },
 
   addModelToLocalData(model, dontTrigger) {
@@ -807,35 +814,6 @@ const privateApi = {
       this.trigger('change', model);
       this.trigger('remove', model);
     }
-  },
-
-  addToQueue(queue, model) {
-    if (this.queues[queue].indexOf(model) === -1) {
-      this.queues[queue].push(model);
-    }
-  },
-
-  removeFromQueue(queue, model) {
-    const index = this.queues[queue].indexOf(model);
-
-    if (index !== -1) {
-      this.queues[queue].splice(index, 1);
-    }
-  },
-
-  runQueue(queue) {
-    const promises = [];
-
-    _.each(this.queues[queue], (model, index) => {
-      promises.push(
-        this[queue](model)
-      );
-
-      // remove this item from the queue
-      this.queues[queue].splice(index, 1);
-    });
-
-    return Promise.all(promises);
   }
 
 };
