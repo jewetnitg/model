@@ -11,7 +11,7 @@ function Repository(model) {
       value: model.data
     },
     byId: {
-      value: {}
+      value: model.byId
     },
     model: {
       value: model
