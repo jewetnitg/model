@@ -3,15 +3,17 @@ import events from 'events';
 import _ from 'lodash';
 
 import Queue from './Queue';
+import Repository from './Repository';
+import Listener from './Listener';
 
 import communicator from '../singletons/communicator';
 
-import ModelValidator from '../validators/Model';
 import models from '../singletons/models';
 import modelsById from '../singletons/modelsById';
 
 import makeRestRequestsForModel from '../helpers/makeRestRequestsForModel';
 import replaceObjectProperties from '../helpers/replaceObjectProperties';
+import ModelSpec from '../specs/ModelSpec';
 
 /**
  * This function creates an Model.
@@ -56,139 +58,7 @@ import replaceObjectProperties from '../helpers/replaceObjectProperties';
  * });
  */
 function Model(options = {}) {
-  // validates the options object contains all properties needed to create an Model
-  options = _.merge({}, Model.defaults, {
-    event: options.name,
-    url: `/${options.name}`
-  }, options);
-
-  ModelValidator.construct(options);
-
-  const server = communicator.servers[options.connection][options.name] = communicator.servers[options.connection][options.name] || {};
-
-  const eventEmitter = new events.EventEmitter();
-
-  const props = {
-    name: {
-      value: options.name
-    },
-    defaults: {
-      value: options.defaults
-    },
-    connection: {
-      value: options.connection
-    },
-    event: {
-      value: options.event
-    },
-    schema: {
-      value: options.schema
-    },
-    requests: {
-      value: options.requests
-    },
-    url: {
-      value: options.url
-    },
-    idAttribute: {
-      value: options.idAttribute
-    },
-    updatedOnAttribute: {
-      value: options.updatedOnAttribute
-    },
-    createdOnAttribute: {
-      value: options.createdOnAttribute
-    },
-
-    /**
-     * Object containing functions representing requests
-     *
-     * @name server
-     * @memberof Model
-     * @instance
-     * @type Object<Function>
-     * @example
-     * model.server.login()
-     *   .then(...);
-     */
-    server: {
-      value: server
-    },
-
-    /**
-     * Object that maps model ids to models
-     *
-     * @name byId
-     * @memberof Model
-     * @instance
-     * @type Object<Object>
-     * @example
-     * < model.byId["aaedfeae53d23d23f2f31ddsd"]
-     * > Object {name: ...}
-     */
-    byId: {
-      value: modelsById[options.name] = {}
-    },
-
-    /**
-     * Array containing all models
-     *
-     * @name data
-     * @memberof Model
-     * @instance
-     *
-     * @type Array<Object>
-     * @example
-     * < model.data[0]
-     * > Object {name: ...}
-     */
-    data: {
-      value: models[options.name] = []
-    },
-
-    _modelChangeListeners: {
-      value: []
-    },
-
-    /**
-     * Listens for an event and triggers the callback when it occurs.
-     *
-     * @method on
-     * @memberof Model
-     * @instance
-     *
-     * @param event {String} The event to listen for
-     * @param callback {Function} The function to call when the event has occured
-     * @example
-     * model.on('change', function (data) {
-     *   // do some stuff
-     * });
-     */
-    on: {
-      value(event, callback) {
-        eventEmitter.on(event, callback);
-      }
-    },
-
-    /**
-     * Triggers an event with data
-     *
-     * @method trigger
-     * @memberof Model
-     * @instance
-     *
-     * @param event {String} The event to trigger
-     * @param data {*} The data to trigger with the event
-     * @example
-     * model.trigger('event', {someTest: 'data'});
-     */
-    trigger: {
-      value(event, data) {
-        eventEmitter.emit(event, data);
-      }
-    }
-  };
-
+  const props = ModelSpec(options, Model);
   const model = Object.create(Model.prototype, props);
 
   _.extend(model, options.api);
@@ -199,16 +69,18 @@ function Model(options = {}) {
     _.bindAll(model, _.methods(options.api));
   }
 
+  privateApi.constructListener.call(model);
+  privateApi.constructRepository.call(model);
   privateApi.constructQueues.call(model);
   privateApi.constructRequests.call(model);
-  privateApi.bindModelChangeListener.call(model);
 
   Model.models[model.name] = model;
 
   return model;
 }
 
-Model.models = {};
+Model.models = models;
+Model.byId = modelsById;
 
 /**
  * The default values for a model, these may be changed.
@@ -299,6 +171,22 @@ Model.Connection = communicator.Connection;
 
 Model.prototype = {
 
+  on(event, callback) {
+    return this.listener.on(event, callback);
+  },
+
+  off(event, callback) {
+    return this.listener.off(event, callback);
+  },
+
+  once(event, callback) {
+    return this.listener.once(event, callback);
+  },
+
+  trigger(event, data) {
+    return this.listener.trigger(event, data);
+  },
+
   /**
    * Listens to changes in one, or all models.
    *
@@ -307,49 +195,16 @@ Model.prototype = {
    * @instance
    *
    * @param {Object} [model] Model to listen to
-   * @param callback {Function} Function to call when the model has changed.
+   * @param {Object} [event] Event to listen to
+   * @param callback {Function} Function to call when the event has been triggered for this model.
    *
    * @returns {Object} Listener object, this is used to stop listening, by passing it into stopListeningTo, or by calling the stop() method provided on it
    * @example
    * user.listenTo(model, function (changedModel) {...});
    * user.listenTo(function (changedModel) {...});
    */
-  listenTo(model, callback) {
-    const self = this;
-
-    if (typeof model === 'function') {
-      callback = model;
-      model = null;
-    }
-
-    const listenerObj = {
-      model,
-      callback,
-      stop() {
-        return self.stopListeningTo(listenerObj);
-      }
-    };
-
-    this._modelChangeListeners.push(listenerObj);
-
-    return listenerObj;
-  },
-
-  /**
-   * Stops listening to one listenerObj
-   *
-   * @method stopListeningTo
-   * @memberof Model
-   * @instance
-   *
-   * @param listenerObj {Object} Object returned by listenTo
-   */
-  stopListeningTo(listenerObj) {
-    const index = this._modelChangeListeners.indexOf(listenerObj);
-
-    if (index !== -1) {
-      this._modelChangeListeners.splice(index, 1);
-    }
+  listenTo(model, event, callback) {
+    return this.listener.listenTo(model, event, callback);
   },
 
   /**
@@ -576,14 +431,14 @@ Model.prototype = {
    * @instance
    * @alias set
    *
-   * @param models {...(Object|Array<Object>)} models to be added
+   * @param models (Object|Array<Object>)} models to be added
    * @example
    * model.add({});
    * model.add([{}]);
    * model.add([{}], {});
    */
-  add(...models) {
-    privateApi.addModelsToLocalData.call(this, _.flatten(models), true);
+  add(models) {
+    privateApi.addModelsToLocalData.call(this, models, true);
   },
 
   /**
@@ -601,8 +456,8 @@ Model.prototype = {
    * model.remove([{}], {});
    *
    */
-  remove(...models) {
-    privateApi.removeModelsFromLocalData.call(this, _.flatten(models), true);
+  remove(models) {
+    privateApi.removeModelsFromLocalData.call(this, models, true);
   },
 
   /**
@@ -668,6 +523,14 @@ Model.prototype = {
 // private API of the Model, these methods are always called with the context of a Model
 const privateApi = {
 
+  constructRepository() {
+    this.repository = Repository(this);
+  },
+
+  constructListener() {
+    this.listener = Listener(this);
+  },
+
   constructQueues() {
     this.queues = {
       save: Queue((model) => {
@@ -677,39 +540,6 @@ const privateApi = {
         return this.destroy(model);
       })
     };
-  },
-
-  bindModelChangeListener() {
-    this.on('change', (model) => {
-      privateApi.callModelChangeListeners.call(this, model);
-    });
-  },
-
-  callModelChangeListeners(model) {
-    let callbackData = null;
-    let filter = null;
-
-    if (typeof model === 'object') {
-      callbackData = model;
-      filter = listener => {
-        if (!listener.model) {
-          return true;
-        }
-
-        const changedId = model[this.idAttribute];
-        const listenerId = listener.model[this.idAttribute];
-
-        return model === listener.model || (changedId && changedId == listenerId);
-      };
-    } else {
-      filter = listener => {
-        return !listener.model;
-      };
-    }
-
-    _.each(_.filter(this._modelChangeListeners, filter), listener => {
-      listener.callback(callbackData);
-    });
   },
 
   constructRequests() {
@@ -724,95 +554,19 @@ const privateApi = {
     });
   },
 
-  findModelInLocalData(model) {
-    const id = typeof model !== 'object' ? model : model[this.idAttribute];
-
-    if (id) {
-      return this.byId[id];
-    } else {
-      return _.find(this.data, model);
-    }
-  },
-
-  removeModelsFromLocalData(models = [], addToQueue = false, dontTrigger = false) {
-    const _models = _.flatten(models);
-
-    _.each(_models, (model) => {
-      const existingModel = privateApi.findModelInLocalData.call(this, model);
-
-      if (existingModel) {
-        privateApi.removeModelFromLocalData.call(this, existingModel, model, dontTrigger);
-      }
-    });
+  removeModelsFromLocalData(models = [], addToQueue = false) {
+    const _models = this.repository.remove(models);
 
     if (addToQueue) {
-      this.queues.destroy.add(models);
+      this.queues.destroy.add(_models);
     }
   },
 
-  addModelsToLocalData(models = [], addToQueue = false, dontTrigger = false) {
-    const _models = _.flatten(models);
-
-    _.each(_models, (model) => {
-      const existingModel = privateApi.findModelInLocalData.call(this, model);
-
-      if (existingModel) {
-        privateApi.updateModelInLocalData.call(this, existingModel, model, dontTrigger);
-      } else {
-        privateApi.addModelToLocalData.call(this, model, dontTrigger);
-      }
-    });
+  addModelsToLocalData(models = [], addToQueue = false) {
+    const _models = this.repository.add(models);
 
     if (addToQueue) {
-      this.queues.save.add(models);
-    }
-  },
-
-  addModelToLocalData(model, dontTrigger) {
-    const id = model[this.idAttribute];
-
-    this.data.push(model);
-
-    if (model[this.idAttribute]) {
-      this.byId[id] = model;
-    }
-
-    if (!dontTrigger) {
-      this.trigger('change', model);
-      this.trigger('add', model);
-    }
-
-    return model;
-  },
-
-  updateModelInLocalData(existingModel, model, dontTrigger) {
-    if (existingModel !== model) {
-      replaceObjectProperties(existingModel, model);
-    }
-
-    if (!dontTrigger) {
-      this.trigger('change', existingModel);
-      this.trigger('update', existingModel);
-    }
-
-    return existingModel;
-  },
-
-  removeModelFromLocalData(model, dontTrigger) {
-    const index = this.data.indexOf(model);
-    const id = this.id(model);
-
-    if (index !== -1) {
-      this.data.splice(index, 1);
-    }
-
-    if (typeof id !== 'undefined') {
-      delete this.byId[id];
-    }
-
-    if (!dontTrigger) {
-      this.trigger('change', model);
-      this.trigger('remove', model);
+      this.queues.save.add(_models);
     }
   }
 

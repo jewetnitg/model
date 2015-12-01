@@ -18,24 +18,32 @@ function Queue(task) {
 
 Queue.prototype = {
 
-  add(...items) {
-    _.each(_.flatten(items), item => {
-      const index = this.queue.indexOf(item);
+  add(items) {
+    if (Array.isArray(items)) {
+      _.each(items, item => {
+        this.add(item);
+      });
+    } else {
+      const index = this.queue.indexOf(items);
 
       if (index === -1) {
-        this.queue.push(item);
+        this.queue.push(items);
       }
-    });
+    }
   },
 
-  remove(...items) {
-    _.each(_.flatten(items), item => {
-      const index = this.queue.indexOf(item);
+  remove(items) {
+    if (Array.isArray(items)) {
+      _.each(items, item => {
+        this.remove(item);
+      });
+    } else {
+      const index = this.queue.indexOf(items);
 
       if (index !== -1) {
         this.queue.splice(index, 1);
       }
-    });
+    }
   },
 
   empty() {

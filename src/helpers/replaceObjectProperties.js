@@ -4,6 +4,10 @@
 import _ from 'lodash';
 
 function replaceObjectProperties(obj = {}, newProperties = {}) {
+  if (obj === newProperties) {
+    return obj;
+  }
+
   if (Array.isArray(obj)) {
     _.each(obj, (val, index) => {
       obj.splice(index, 1);
