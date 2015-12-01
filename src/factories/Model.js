@@ -302,11 +302,57 @@ Model.Connection = communicator.Connection;
 
 Model.prototype = {
 
+  /**
+   * Listens to changes in one, or all models.
+   *
+   * @method listenTo
+   * @memberof Model
+   * @instance
+   *
+   * @param {Object} [model] Model to listen to
+   * @param callback {Function} Function to call when the model has changed.
+   *
+   * @returns {Object} Listener object, this is used to stop listening, by passing it into stopListeningTo, or by calling the stop() method provided on it
+   * @example
+   * user.listenTo(model, function (changedModel) {...});
+   * user.listenTo(function (changedModel) {...});
+   */
   listenTo(model, callback) {
-    this._modelChangeListeners.push({
+    const self = this;
+
+    if (typeof model === 'function') {
+      callback = model;
+      model = null;
+    }
+
+    const listenerObj = {
       model,
-      callback
-    });
+      callback,
+      stop() {
+        return self.stopListeningTo(listenerObj);
+      }
+    };
+
+    this._modelChangeListeners.push(listenerObj);
+
+    return listenerObj;
+  },
+
+  /**
+   * Stops listening to one listenerObj
+   *
+   * @method stopListeningTo
+   * @memberof Model
+   * @instance
+   *
+   * @param listenerObj {Object} Object returned by listenTo
+   */
+  stopListeningTo(listenerObj) {
+    const index = this._modelChangeListeners.indexOf(listenerObj);
+
+    if (index !== -1) {
+      this._modelChangeListeners.splice(index, 1);
+    }
   },
 
   /**
@@ -514,15 +560,16 @@ Model.prototype = {
    * @instance
    * @alias add
    *
-   * @param models {...(Object|Array<Object>)} models to be added
-   * @example
-   * model.set({});
-   * model.set([{}]);
-   * model.set([{}], {});
+   * @param model {Object} model that is to be set
+   * @param properties {Object} new properties that have to be set
    *
+   * @example
+   * model.set(model.data[0], {firstName: 'bob});
    */
-  set(...models) {
-    this.add(models);
+  set(model, properties = {}) {
+    _.extend(model, properties);
+    this.add(model);
+    return model;
   },
 
   /**
@@ -622,7 +669,7 @@ Model.prototype = {
 
 };
 
-// private API of the Model
+// private API of the Model, these methods are always called with the context of a Model
 const privateApi = {
 
   bindModelChangeListener() {
@@ -632,28 +679,29 @@ const privateApi = {
   },
 
   callModelChangeListeners(model) {
-    _.each(this._modelChangeListeners, (listener) => {
-      if (listener.model) {
-        if (model) {
-          if (Array.isArray(model)) {
-            model = _.find(model, (item) => {
-              return item === listener.model
-                || (item[this.idAttribute] && item[this.idAttribute] === item[this.idAttribute])
-                || (item.id && item.id === listener.id);
-            });
+    let callbackData = null;
+    let filter = null;
 
-            if (model) {
-              listener.callback(model);
-            }
-          } else if (typeof model === 'object') {
-            if (model === listener.model || (model[this.idAttribute] && model[this.idAttribute] === model[this.idAttribute]) || (model.id && model.id === listener.id)) {
-              listener.callback(model);
-            }
-          }
+    if (typeof model === 'object') {
+      callbackData = model;
+      filter = listener => {
+        if (!listener.model) {
+          return true;
         }
-      } else {
-        listener.callback();
-      }
+
+        const changedId = model[this.idAttribute];
+        const listenerId = listener.model[this.idAttribute];
+
+        return model === listener.model || (changedId && changedId == listenerId);
+      };
+    } else {
+      filter = listener => {
+        return !listener.model;
+      };
+    }
+
+    _.each(_.filter(this._modelChangeListeners, filter), listener => {
+      listener.callback(callbackData);
     });
   },
 
@@ -686,16 +734,11 @@ const privateApi = {
       const existingModel = privateApi.findModelInLocalData.call(this, model);
 
       if (existingModel) {
-        privateApi.removeModelFromLocalData.call(this, existingModel, model, true);
+        privateApi.removeModelFromLocalData.call(this, existingModel, model, dontTrigger);
       }
 
       if (addToQueue) {
         privateApi.addToQueue.call(this, 'destroy', model);
-      }
-
-      if (!dontTrigger) {
-        this.trigger('change', this.data);
-        this.trigger('remove');
       }
     });
   },
@@ -707,17 +750,13 @@ const privateApi = {
       const existingModel = privateApi.findModelInLocalData.call(this, model);
 
       if (existingModel) {
-        privateApi.updateModelInLocalData.call(this, existingModel, model, true);
+        privateApi.updateModelInLocalData.call(this, existingModel, model, dontTrigger);
       } else {
-        privateApi.addModelToLocalData.call(this, model, true);
+        privateApi.addModelToLocalData.call(this, model, dontTrigger);
       }
 
       if (addToQueue) {
         privateApi.addToQueue.call(this, 'save', model);
-      }
-
-      if (!dontTrigger) {
-        this.trigger('change', this.data);
       }
     });
   },
@@ -765,8 +804,8 @@ const privateApi = {
     }
 
     if (!dontTrigger) {
-      this.trigger('change', {id: id});
-      this.trigger('remove', {id: id});
+      this.trigger('change', model);
+      this.trigger('remove', model);
     }
   },
 
