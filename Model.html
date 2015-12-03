@@ -1,0 +1,4383 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=yes, width=device-width">
+  <title>MODEL — Class: Model</title>
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+  <link type="text/css" rel="stylesheet" href="styles/site.oblivion.css">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+      <a class="brand" href="index.html">MODEL</a>
+      <ul class="nav">
+        
+        <li class="dropdown">
+          <a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+            class="caret"></b></a>
+
+          <ul class="dropdown-menu ">
+            
+            <li>
+              <a href="Model.html">Model</a>
+            </li>
+            
+
+          </ul>
+        </li>
+        
+        <li class="dropdown">
+          <a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b
+            class="caret"></b></a>
+
+          <ul class="dropdown-menu ">
+            
+            <li>
+              <a href="tutorial-README.html">README</a>
+            </li>
+            
+            <li>
+              <a href="tutorial-build.html">build</a>
+            </li>
+            
+            <li>
+              <a href="tutorial-npm scripts.html">npm scripts</a>
+            </li>
+            
+            <li>
+              <a href="tutorial-walkthrough.html">walkthrough</a>
+            </li>
+            
+
+          </ul>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+
+    
+    <div class="span3">
+      <div id="toc"></div>
+    </div>
+    
+
+    
+    <div class="span9">
+      
+        <div id="main">
+          
+
+
+	<h1 class="page-title">Class: Model</h1>
+<section>
+
+<header>
+    <h2>
+    Model
+    </h2>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+
+    
+        
+<dt>
+    <h4 class="name" id="Model"><span class="type-signature"></span>new Model<span class="signature">(<span class="optional">options</span>)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        This function creates an Model.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+      <th>Argument</th>
+      
+  
+      
+      <th>Default</th>
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>options</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+  
+                  
+  
+                  
+                  </td>
+              
+  
+              
+                  <td class="default">
+                  
+                      {}
+                  
+                  </td>
+              
+  
+              <td class="description last">Object containing the properties listed below.</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  <h5 class="subsection-title">Properties:</h5>
+
+  <dl>
+
+<table class="props table table-striped">
+    <thead>
+  <tr>
+    
+    <th>Name</th>
+    
+
+    <th>Type</th>
+
+    
+    <th>Argument</th>
+    
+
+    
+    <th>Default</th>
+    
+
+    <th class="last">Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The name of the model.</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>connection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The connection this model should use</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    `/${name}`
+                
+                </td>
+            
+
+            <td class="description last">The base url of the model ('/user' for example)</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>api</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">Object the model will be extended with</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">Object describing the properties of a Model, NOT IMPLEMENTED YET</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>defaults</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">Object with default properties of the model, schema will deprecate this property</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    The models name
+                
+                </td>
+            
+
+            <td class="description last">Server event for the model, 'user' for example</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>requests</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">Requests for this model, other than the restful findAll(), findById(id), create(model), update(id, model), destroy(id) methods, which are created automatically</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>idAttribute</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'id'
+                
+                </td>
+            
+
+            <td class="description last">The attribute on which the id of the model resides.</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>createdOnAttribute</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'createdAt'
+                
+                </td>
+            
+
+            <td class="description last">The attribute on which the created on property of the model resides.</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>updatedOnAttribute</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'updatedAt'
+                
+                </td>
+            
+
+            <td class="description last">The attribute on which the updated on property of the model resides.</td>
+        </tr>
+
+  
+  </tbody>
+</table>
+</dl>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-author">Author:</dt>
+  <dd class="tag-author">
+    <ul>
+      <li>Rik Hoffbauer</li>
+      </ul>
+  </dd>
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+  <dt class="tag-todo">To Do:</dt>
+  <dd class="tag-todo">
+    <ul>
+      <li>handle connection events</li>
+      
+      <li>implement schema, deprecate defaults</li>
+      
+      <li>tbd: do we want to allow for transformer functions to be defined that are executed before and after a request to the server is made</li>
+      
+      <li>allow idAttribute, createdAtAttribute and updateAtAttribute to be implemented as functions</li>
+      </ul>
+  </dd>
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import Model from &#x27;frontend-model&#x27;;
+
+const model = Model({
+  name: &#x27;user&#x27;,
+  url: &#x27;/user&#x27;,
+  connection: &#x27;local-xhr&#x27;,
+  requests: {
+    login: {
+      route: &#x27;/user/login&#x27;,
+      method: &#x27;get&#x27;
+    }
+  },
+  event: &#x27;user&#x27;,
+  idAttribute: &#x27;id&#x27;
+});</pre>
+
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<dt class="name" id=".byId">
+    <h4><span class="type-signature">&lt;static> </span>byId<span class="type-signature"> :Object</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        All data for all models by id
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import Model from &#x27;frontend-model&#x27;;
+
+Model.models.byId; // {1: {name: &#x27;bob&#x27;}, 2: {...}, 3: {...}}</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt class="name" id=".communicator">
+    <h4><span class="type-signature">&lt;static> </span>communicator<span class="type-signature"> :Object</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Communicator used by the Model to communicate with the server, see the frontend-communicator documentation for more information.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import Model from &#x27;frontend-model&#x27;;
+
+Model.communicator.connect(&#x27;local-xhr&#x27;)
+  .then(...);</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt class="name" id=".defaults">
+    <h4><span class="type-signature">&lt;static> </span>defaults<span class="type-signature"> :Object</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The default values for a model, these may be changed.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+  
+
+  <h5 class="subsection-title">Properties:</h5>
+
+  <dl>
+
+<table class="props table table-striped">
+    <thead>
+  <tr>
+    
+    <th>Name</th>
+    
+
+    <th>Type</th>
+
+    
+    <th>Argument</th>
+    
+
+    
+    <th>Default</th>
+    
+
+    <th class="last">Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ''
+                
+                </td>
+            
+
+            <td class="description last">Shouldn't be set to anything, default name of a model should be an empty string</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>connection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ''
+                
+                </td>
+            
+
+            <td class="description last">Connection might be useful to set, so you don't have to provide it to every model</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>requests</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">You can create requests that become available for every model</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>api</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">Provide a default api for all models</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">Provide a default schema for all models</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>defaults</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last">Set defaults for all models, probably not useful</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>idAttribute</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'id'
+                
+                </td>
+            
+
+            <td class="description last">Set the idAttribute of every object, might be useful</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>updatedOnAttribute</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'updatedAt
+                
+                </td>
+            
+
+            <td class="description last">Set the updatedAt of every object, might be useful</td>
+        </tr>
+
+  
+
+        <tr>
+            
+                <td class="name"><code>createdOnAttribute</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'createdAt'
+                
+                </td>
+            
+
+            <td class="description last">Set the createdAt of every object, might be useful</td>
+        </tr>
+
+  
+  </tbody>
+</table>
+</dl>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import Model from &#x27;frontend-model&#x27;;
+
+Model.defaults.connection = &#x27;local-xhr&#x27;;</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt class="name" id=".models">
+    <h4><span class="type-signature">&lt;static> </span>models<span class="type-signature"> :Object</span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        All data for all models
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import Model from &#x27;frontend-model&#x27;;
+
+Model.models.users; // [{name: &#x27;bob&#x27;}, {...}, {...}]</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt class="name" id="byId">
+    <h4><span class="type-signature"></span>byId<span class="type-signature"> :Object.&lt;Object></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Object that maps model ids to models
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object.&lt;Object></span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">&lt; model.byId[&quot;aaedfeae53d23d23f2f31ddsd&quot;]
+&gt; Object {name: ...}</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt class="name" id="data">
+    <h4><span class="type-signature"></span>data<span class="type-signature"> :Array.&lt;Object></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Array containing all models
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">&lt; model.data[0]
+&gt; Object {name: ...}</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt class="name" id="server">
+    <h4><span class="type-signature"></span>server<span class="type-signature"> :Object.&lt;function()></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Object containing functions representing requests
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object.&lt;function()></span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">model.server.login()
+  .then(...);</pre>
+
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<dt>
+    <h4 class="name" id=".Adapter"><span class="type-signature">&lt;static> </span>Adapter<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Adapter factory, see the frontend-communicator documentation for more information.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import Model from &#x27;frontend-model&#x27;;
+
+Model.Adapter({
+  connect() {
+  }
+  ...
+});</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id=".Connection"><span class="type-signature">&lt;static> </span>Connection<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Connection factory, see the frontend-communicator documentation for more information.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">import Model from &#x27;frontend-model&#x27;;
+
+Model.Connection({
+  name: &#x27;local-xhr&#x27;,
+  adapter: &#x27;XHR&#x27;,
+  url: &#x27;http://localhost:1337&#x27;
+});</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="add"><span class="type-signature"></span>add<span class="signature">(models)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Adds one or more models to the local data, if models already exist, their properties are replaced.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>models</code></td>
+              
+  
+              <td class="type">
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">(Object|Array<Object>)} models to be added</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">model.add({});
+model.add([{}]);
+model.add([{}], {});</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="clone"><span class="type-signature"></span>clone<span class="signature">(model)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Clones a model, by cloning the object and removing its id, createOn and updatedOn properties. The attributes of these three properties can be configured using the idAttribute, createdOnAttribute and updatedOnAttribute.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>model</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">Model that is to be cloned</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">Object</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">const clonedModel = model.clone({
+  name: &#x27;bob&#x27;
+});
+// to save to the server:
+model.sync(); // syncs everything, most expensive
+// or
+model.save(); // saves everything, significantly less expensive
+// or
+model.save(clonedModel); // saves just this model, least expensive</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="create"><span class="type-signature"></span>create<span class="signature">(attributes)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Creates a a new model, and adds it to the local data, when sync(), save() or save(createdModel) is called it will be saved to the server.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>attributes</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">Properties of the model to create</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">Object</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">const createdModel = model.create({
+  name: &#x27;bob&#x27;
+});
+// to save to the server:
+model.sync(); // syncs everything, most expensive
+// or
+model.save(); // saves everything, significantly less expensive
+// or
+model.save(createdModel); // saves just this model, least expensive</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="destroy"><span class="type-signature"></span>destroy<span class="signature">(<span class="optional">model</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Destroy a model on the server, to remove a model locally see <a href="Model.html#remove"><code>Model#remove</code></a>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+      <th>Argument</th>
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>model</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Number</span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+  
+                  
+  
+                  
+                  </td>
+              
+  
+              
+  
+              <td class="description last">Model or model id</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">Promise</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// to destroy all newly created or updated models
+model.destroy()
+  .then(...);
+
+// destroy one model by object
+model.save({
+    id: 3
+  })
+  .then(...);
+
+// destroy one model by id
+model.destroy(3)
+  .then(...);</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="fetch"><span class="type-signature"></span>fetch<span class="signature">(model)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Fetches a model from the server
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>model</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Number</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">Model or model id</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">Promise</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// fetch all models
+model.fetch()
+  .then(...);
+
+// fetch one model by object
+model.fetch({
+    id: 3,
+    ...
+  })
+  .then(...);
+
+// fetch one model by id
+model.fetch(3)
+  .then(...);</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="id"><span class="type-signature"></span>id<span class="signature">(model)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Gets the id for a model
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>model</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Number</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">Model or id</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">*</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">model.id({...});</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="isNew"><span class="type-signature"></span>isNew<span class="signature">(model)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Determines whether a model is new (doesn't exist on the server)
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>model</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">object</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">model in question</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">boolean</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">&lt; model.isNew({
+  name: &#x27;bob&#x27;
+});
+&gt; false
+
+&lt; model.isNew({
+ id: 3
+});
+&gt; true</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="listenTo"><span class="type-signature"></span>listenTo<span class="signature">(<span class="optional">model</span>, <span class="optional">event</span>, callback)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Listens to changes in one, or all models.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+      <th>Argument</th>
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>model</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+  
+                  
+  
+                  
+                  </td>
+              
+  
+              
+  
+              <td class="description last">Model to listen to</td>
+          </tr>
+  
+    
+  
+          <tr>
+              
+                  <td class="name"><code>event</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+  
+                  
+  
+                  
+                  </td>
+              
+  
+              
+  
+              <td class="description last">Event to listen to</td>
+          </tr>
+  
+    
+  
+          <tr>
+              
+                  <td class="name"><code>callback</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">function</span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+  
+                  
+  
+                  
+                  </td>
+              
+  
+              
+  
+              <td class="description last">Function to call when the event has been triggered for this model.</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Listener object, this is used to stop listening, by passing it into stopListeningTo, or by calling the stop() method provided on it
+</div>
+
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">Object</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">user.listenTo(model, function (changedModel) {...});
+user.listenTo(function (changedModel) {...});</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="off"><span class="type-signature"></span>off<span class="signature">(event, <span class="optional">callback</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Stops removes one or all listeners from an event
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+      <th>Argument</th>
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>event</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">String</span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+  
+                  
+  
+                  
+                  </td>
+              
+  
+              
+  
+              <td class="description last">The event that has to be stopped listening to</td>
+          </tr>
+  
+    
+  
+          <tr>
+              
+                  <td class="name"><code>callback</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">function</span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+  
+                  
+  
+                  
+                  </td>
+              
+  
+              
+  
+              <td class="description last">The callback that should be removed</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">*</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="on"><span class="type-signature"></span>on<span class="signature">(event, callback)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Listens to an event and triggers the callback when it occurs.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>event</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">String</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">The event to listen for</td>
+          </tr>
+  
+    
+  
+          <tr>
+              
+                  <td class="name"><code>callback</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">function</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">The function to trigger when the event has occurred</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">*</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="once"><span class="type-signature"></span>once<span class="signature">(event, callback)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Listens to an event and triggers the callback when it occurs. After this happens the listener is removed.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>event</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">String</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">The event to listen for</td>
+          </tr>
+  
+    
+  
+          <tr>
+              
+                  <td class="name"><code>callback</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">function</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">The function to trigger when the event has occurred</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">*</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="remove"><span class="type-signature"></span>remove<span class="signature">(models)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Removes one or more models from the local data, to remove a model from the server see <a href="Model.html#destroy"><code>Model#destroy</code></a>.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+      <th>Argument</th>
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>models</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">Array.&lt;Object></span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+  
+                  
+  
+                  
+                      &lt;repeatable><br>
+                  
+                  </td>
+              
+  
+              
+  
+              <td class="description last">models to be removed</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// etc.
+model.remove({});
+model.remove([{}]);
+model.remove([{}], {});</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Resets the data of the model to the state of the server. Gets rid of any changes that haven't been saved yet.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">Promise</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">model.reset()
+  .then(...)</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="save"><span class="type-signature"></span>save<span class="signature">(<span class="optional">model</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Saves a model to the server, if model is provided, all to be saved models will be saved to the server (all locally created and changed models)
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+      <th>Argument</th>
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>model</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+
+
+              
+              </td>
+  
+              
+                  <td class="attributes">
+                  
+                      &lt;optional><br>
+                  
+  
+                  
+  
+                  
+                  </td>
+              
+  
+              
+  
+              <td class="description last">The model to save, if none specified, all models that are to be saved will be saved</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">Promise</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// to save all newly created or updated models
+model.save()
+  .then(...);
+
+// save one model
+model.save({
+    name: &#x27;bob&#x27;
+  })
+  .then(...);</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="set"><span class="type-signature"></span>set<span class="signature">(model, properties)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        See <a href="Model.html#add"><code>Model#add</code></a>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>model</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">model that is to be set</td>
+          </tr>
+  
+    
+  
+          <tr>
+              
+                  <td class="name"><code>properties</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">Object</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">new properties that have to be set</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">model.set(model.data[0], {firstName: &#x27;bob});</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="sync"><span class="type-signature"></span>sync<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Syncs the local data with server data, first destroys and saves models from and to the server that have been removed / changed / created locally.
+After removing and saving local models to the server, the current data is fetched from the server
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">Promise</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">model.sync()
+  .then(...);</pre>
+
+
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="trigger"><span class="type-signature"></span>trigger<span class="signature">(event, data)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Triggers an event with data
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+<div class="params-table-container">
+  <table class="params table table-striped">
+      <thead>
+    <tr>
+      
+      <th>Name</th>
+      
+  
+      <th>Type</th>
+  
+      
+  
+      
+  
+      <th class="last">Description</th>
+    </tr>
+    </thead>
+  
+    <tbody>
+    
+  
+          <tr>
+              
+                  <td class="name"><code>event</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">String</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">Event to trigger</td>
+          </tr>
+  
+    
+  
+          <tr>
+              
+                  <td class="name"><code>data</code></td>
+              
+  
+              <td class="type">
+              
+                  
+<span class="param-type">*</span>
+
+
+              
+              </td>
+  
+              
+  
+              
+  
+              <td class="description last">Data to trigger with the event</td>
+          </tr>
+  
+    
+    </tbody>
+  </table>
+</div>
+
+    
+    
+    
+<dl class="details">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    
+<span class="param-type">*</span>
+
+
+  </dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+        </div>
+
+        <div class="clearfix"></div>
+        <footer>
+          
+          
+    <span class="copyright">
+    Rik Hoffbauer 2015
+    </span>
+          <br />
+          
+    <span class="jsdoc-message">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc" target="_blank">JSDoc 3.4.0</a>
+    on 2015-12-03T17:37:53+01:00
+    </span>
+        </footer>
+      </div>
+
+      <br clear="both">
+    </div>
+
+  </div>
+  <!--<script src="scripts/sunlight.js"></script>-->
+  <script src="scripts/docstrap.lib.js"></script>
+  <script src="scripts/bootstrap-dropdown.js"></script>
+  <script src="scripts/toc.js"></script>
+
+  <script>
+    $( function () {
+      $( "[id*='$']" ).each( function () {
+        var $this = $( this );
+
+        $this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+      } );
+
+      $( "#toc" ).toc( {
+        anchorName  : function ( i, heading, prefix ) {
+          return $( heading ).attr( "id" ) || ( prefix + i );
+        },
+        selectors   : "h1,h2,h3,h4",
+        showAndHide : false,
+        scrollTo    : "100px"
+      } );
+
+      $( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+      $( "#main span[id^='toc']" ).addClass( "toc-shim" );
+      $( '.dropdown-toggle' ).dropdown();
+//      $( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+      $( ".tutorial-section pre, .readme-section pre" ).each( function () {
+        var $this = $( this );
+
+        var example = $this.find( "code" );
+        exampleText = example.html();
+        var lang = /{@lang (.*?)}/.exec( exampleText );
+        if ( lang && lang[1] ) {
+          exampleText = exampleText.replace( lang[0], "" );
+          example.html( exampleText );
+          lang = lang[1];
+        } else {
+          lang = "javascript";
+        }
+
+        if ( lang ) {
+
+          $this
+            .addClass( "sunlight-highlight-" + lang )
+            .addClass( "linenums" )
+            .html( example.html() );
+
+        }
+      } );
+
+      Sunlight.highlightAll( {
+        lineNumbers : true,
+        showMenu : true,
+        enableDoclinks : true
+      } );
+    } );
+   </script>
+
+
+
+  <!--Navigation and Symbol Display-->
+  
+
+
+  <!--Google Analytics-->
+  
+
+</body>
+</html>
