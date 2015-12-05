@@ -26,9 +26,10 @@
   },
   "eslintConfig": {},
   "dependencies": {
+    "babel-polyfill": "^6.3.14",
+    "frontend-communicator": "file:modules/frontend-communicator",
     "jquery": "2.1.4",
     "lodash": "^3.10.1",
-    "frontend-communicator": "file:modules/frontend-communicator",
     "require-globify": "^1.3.0"
   },
   "devDependencies": {
