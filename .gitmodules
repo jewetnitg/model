@@ -1,4 +1,0 @@
-[submodule "modules/frontend-communicator"]
-	path = modules/frontend-communicator
-	branch = master
-	url=https://github.com/jewetnitg/communicator.git
