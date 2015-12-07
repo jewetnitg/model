@@ -1,6 +1,6 @@
 {
   "name": "frontend-model",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "frontend-model is a modular browserify module that serves to make working with models easier.",
   "main": "index.js",
   "scripts": {
