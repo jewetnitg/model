@@ -18,7 +18,7 @@
       [
         "babelify",
         {
-          "sourceMaps": true
+          "sourceMaps": "both"
         }
       ],
       "require-globify"
