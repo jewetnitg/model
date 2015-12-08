@@ -35,6 +35,7 @@ import ModelSpec from '../specs/ModelSpec';
  * @property {String} [createdOnAttribute='createdAt'] - The attribute on which the created on property of the model resides.
  * @property {String} [updatedOnAttribute='updatedAt'] - The attribute on which the updated on property of the model resides.
  *
+ * @todo add static getModelType method that determines the model type (loop through Model.byId and Model.models, first try match using Model.byId, if not found run indexOf on the each Model.models with the passed in mdoel)
  * @todo handle connection events
  * @todo implement schema, deprecate defaults
  * @todo tbd: do we want to allow for transformer functions to be defined that are executed before and after a request to the server is made
