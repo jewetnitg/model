@@ -17,6 +17,7 @@ function ModelSpec(options, Model) {
   ModelValidator.construct(options);
 
   const server = communicator.servers[options.connection][options.name] = communicator.servers[options.connection][options.name] || {};
+  const connection = communicator.connections[options.connection];
 
   return {
     name: {
@@ -26,10 +27,13 @@ function ModelSpec(options, Model) {
       value: options.defaults
     },
     connection: {
-      value: options.connection
+      value: connection
     },
     event: {
       value: options.event
+    },
+    autoSubscribe: {
+      value: options.autoSubscribe
     },
     schema: {
       value: options.schema

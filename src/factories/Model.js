@@ -35,7 +35,7 @@ import ModelSpec from '../specs/ModelSpec';
  * @property {String} [createdOnAttribute='createdAt'] - The attribute on which the created on property of the model resides.
  * @property {String} [updatedOnAttribute='updatedAt'] - The attribute on which the updated on property of the model resides.
  *
- * @todo add static getModelType method that determines the model type (loop through Model.byId and Model.models, first try match using Model.byId, if not found run indexOf on the each Model.models with the passed in mdoel)
+ * @todo add static getModelType method that determines the model type (loop through Model.byId and Model.models, first try match using Model.byId, if not found run indexOf on the each Model.models with the passed in model)
  * @todo handle connection events
  * @todo implement schema, deprecate defaults
  * @todo tbd: do we want to allow for transformer functions to be defined that are executed before and after a request to the server is made
@@ -76,6 +76,10 @@ function Model(options = {}) {
   privateApi.constructRequests.call(model);
 
   Model.models[model.name] = model;
+
+  if (model.autoSubscribe) {
+    model.subscribe();
+  }
 
   return model;
 }
@@ -136,6 +140,7 @@ Model.byId = modelsById;
 Model.defaults = {
   name: '',
   connection: '',
+  autoSubscribe: true,
   requests: {},
   api: {},
   schema: {},
@@ -198,6 +203,26 @@ Model.Adapter = communicator.Adapter;
 Model.Connection = communicator.Connection;
 
 Model.prototype = {
+
+  subscribe() {
+    if (this.connection.adapter.events) {
+      this.connection.subscribe(this.event, (event) => {
+        switch (event.verb) {
+          case 'updated':
+            privateApi.addModelsToLocalData.call(this, event.data);
+            break;
+          case 'created':
+            privateApi.addModelsToLocalData.call(this, event.data);
+            break;
+          case 'destroyed':
+            privateApi.removeModelsFromLocalData.call(this, event.data);
+            break;
+        }
+      }).then((initialModels) => {
+        privateApi.addModelsToLocalData.call(this, initialModels);
+      });
+    }
+  },
 
   /**
    * Listens to an event and triggers the callback when it occurs.
@@ -624,7 +649,7 @@ const privateApi = {
     _.each(this.requests, (requestOptions, name) => {
       const options = _.clone(requestOptions);
       options.name = `${this.name}.${options.name || name}`;
-      options.connection = options.connection || this.connection;
+      options.connection = options.connection || this.connection.name;
 
       communicator.Request(options);
     });
