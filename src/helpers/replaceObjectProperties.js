@@ -9,11 +9,11 @@ function replaceObjectProperties(obj = {}, newProperties = {}) {
   }
 
   if (Array.isArray(obj)) {
-    _.each(obj, (val, index) => {
-      obj.splice(index, 1);
-    });
+    while (obj.length) {
+      obj.pop();
+    }
 
-    if (newProperties) {
+    if (Array.isArray(newProperties)) {
       obj.push.apply(obj, newProperties);
     }
   } else if (typeof obj === 'object') {
@@ -21,7 +21,9 @@ function replaceObjectProperties(obj = {}, newProperties = {}) {
       delete obj[key]
     });
 
-    _.extend(obj, newProperties);
+    if (typeof newProperties === 'object') {
+      _.extend(obj, newProperties);
+    }
   }
 
   return obj;

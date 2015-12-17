@@ -40,8 +40,8 @@ Repository.prototype = {
   addOne(model) {
     const id = this.model.id(model);
     const existingModel = this.get(model);
+    const event = existingModel ? 'update' : 'add';
     let _model = null;
-    let event = existingModel ? 'update' : 'add';
 
     if (existingModel) {
       _model = replaceObjectProperties(existingModel, model);
@@ -54,10 +54,10 @@ Repository.prototype = {
     this.model.trigger(event, _model);
 
     if (id) {
-      this.byId[id] = model;
+      this.byId[id] = _model;
     }
 
-    return model;
+    return _model;
   },
 
   remove(models) {
